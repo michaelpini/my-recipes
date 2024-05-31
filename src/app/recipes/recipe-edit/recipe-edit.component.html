@@ -1,0 +1,35 @@
+
+<div class="container col-xs-12">
+    <p>
+        <img [src]="recipe.imagePath || no_image"
+                class="img-responsive"
+                [class]="{'img-gray': !recipe.id}" 
+                width="500" height="400">
+    </p>
+    <label>id:&ensp;</label> <span>{{recipe.id}}</span>
+    <p>
+        <label>Image Path</label>
+        <input [(ngModel)]="recipe.imagePath" class="form-control">  
+    </p>    
+    <p>
+        <label>Name</label>
+        <input type="text" [(ngModel)]="recipe.name" class="form-control">  
+    </p>
+    <p>
+        <label>Description</label>
+        <textarea rows="10" 
+                   style="height: 200px;" 
+                   name="description" 
+                   [(ngModel)]="recipe.description" 
+                   class="form-control"
+        ></textarea>  
+    </p>
+    <div>
+        <ul class="list-group">
+            @for (ingredient of recipe?.ingredients || []; track $index) {
+                <li class="list-group-item">{{ingredient.name}}:  {{ingredient.amount}}</li>
+            }
+        </ul>
+    </div>
+</div>
+

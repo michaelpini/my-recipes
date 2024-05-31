@@ -1,0 +1,12 @@
+<h3>My crappy child component</h3>
+<p>This is still part of the crap child component's template</p>
+<p>Slot for inserted content with class "main":</p>
+<hr>
+    <ng-content select=".main"></ng-content>
+<hr>
+<p>Slot for inserted content with attribute footer:</p>
+<hr>
+    <ng-content select="[footer]"></ng-content>
+<hr>
+<p>And this is the end of my crappy component</p>
+<h2 *ngIf="isActive">Crappy-child activated!</h2>

@@ -1,0 +1,26 @@
+<!-- CRAP -->
+<h1>My crap parent</h1>
+<div class="container" style="display:flex; flex-direction: column;">
+  <div>
+      <button class="btn btn-primary" (click)="onActivateChild()">Activate crap-child</button>
+  </div>
+  
+  
+  
+  
+  <crap-child>
+
+    <!-- Insert below div to slot: <ng-content select=".main"> -->
+    <div class="main" style="background: rgb(154, 255, 255)">
+      <h3>My inserted main content</h3>
+      <p>Jadi jadi jaa, bla bla</p>
+    </div>
+    
+    <!-- Insert below div to slot: <ng-content select="[footer]"> -->
+    <div footer style="background: rgb(250, 159, 237)">
+      <h3>My inserted footer at sel2</h3>
+      <p>Thanks for nothing, see wouldn't wann beya</p>
+    </div>
+
+  </crap-child>
+</div>
