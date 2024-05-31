@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+button + button {
+    margin-left: 5px;
+}
+.highlight-hover:hover {
+    background-image: linear-gradient(rgb(0 0 0 / 5%) 0 0);
+}
+.pointer {
+    cursor: pointer;
+}
