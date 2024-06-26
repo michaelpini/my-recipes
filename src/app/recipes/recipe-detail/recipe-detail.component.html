@@ -7,7 +7,7 @@
             </button>
             <ul class="dropdown-menu">
                 <li><a class="pointer" (click)="addToShoppingList()">To Shopping List</a></li>
-                <li><a class="pointer" [routerLink]="'edit'" [queryParams]="{id: recipe.id}">Edit Recipe</a></li>
+                <li><a class="pointer" [routerLink]="'edit'">Edit Recipe</a></li>
                 <li><a class="pointer" (click)="delete()">Delete Recipe</a></li>
             </ul>
         </div>
@@ -18,7 +18,7 @@
     <div class="col-xs-12">
         <img [src]="recipe.imagePath"
              class="img-responsive"
-             [class]="{'img-gray': !recipe.id}" 
+             [class]="{'img-gray': !recipe.id}"
              width="500" height="400">
     </div>
 

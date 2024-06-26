@@ -11,7 +11,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 })
 export class RecipeDetailComponent implements OnInit {
   private no_recipe: Recipe = {
-    id: '', 
+    id: '',
     name: 'Select recipe...',
     description: 'Select a recipe from the list first',
     imagePath: '../../../assets/not_found.jpg',
@@ -21,13 +21,13 @@ export class RecipeDetailComponent implements OnInit {
 
 
   constructor(
-    private recipeService: RecipeService, 
+    private recipeService: RecipeService,
     private shoppingService: ShoppingService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params: Params) => {
+    this.route.params.subscribe((params: Params) => {
       this.recipe = this.recipeService.getRecipe(params.id) || this.no_recipe;
     })
     // this.route.params.subscribe((params: Params) => {

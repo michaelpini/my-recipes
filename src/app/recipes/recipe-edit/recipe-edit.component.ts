@@ -14,15 +14,15 @@ export class RecipeEditComponent implements OnInit {
   no_image = '../../../assets/not_found.jpg'
 
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private recipeService: RecipeService
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params: Params) => {
+    this.route.params.subscribe((params: Params) => {
       const recipe = this.recipeService.getRecipe(params.id);
       this.recipe = recipe ? {...recipe} : new Recipe();
     })
-    
+
   }
 }
