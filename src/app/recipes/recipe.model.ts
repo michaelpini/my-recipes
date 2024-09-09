@@ -8,7 +8,7 @@ export class Recipe {
     public ingredients: Ingredient[];
 
     constructor()
-    constructor(name: string, description: string, imagePath: string, ingredients: Ingredient[], id?: string) 
+    constructor(name: string, description: string, imagePath: string, ingredients: Ingredient[], id?: string)
     constructor(name?: string, description?: string, imagePath?: string, ingredients?: Ingredient[], id?: string) {
         this.id = name ? id || crypto.randomUUID() : '';
         this.name = name || '';
@@ -16,5 +16,5 @@ export class Recipe {
         this.imagePath = imagePath || '';
         this.ingredients = ingredients || [];
     }
-    
+
 }

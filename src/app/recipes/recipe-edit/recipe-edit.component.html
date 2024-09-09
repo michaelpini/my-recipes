@@ -1,35 +1,104 @@
 
-<div class="container col-xs-12">
-    <p>
-        <img [src]="recipe.imagePath || no_image"
-                class="img-responsive"
-                [class]="{'img-gray': !recipe.id}" 
-                width="500" height="400">
-    </p>
-    <label>id:&ensp;</label> <span>{{recipe.id}}</span>
-    <p>
-        <label>Image Path</label>
-        <input [(ngModel)]="recipe.imagePath" class="form-control">  
-    </p>    
-    <p>
-        <label>Name</label>
-        <input type="text" [(ngModel)]="recipe.name" class="form-control">  
-    </p>
-    <p>
-        <label>Description</label>
-        <textarea rows="10" 
-                   style="height: 200px;" 
-                   name="description" 
-                   [(ngModel)]="recipe.description" 
-                   class="form-control"
-        ></textarea>  
-    </p>
-    <div>
-        <ul class="list-group">
-            @for (ingredient of recipe?.ingredients || []; track $index) {
-                <li class="list-group-item">{{ingredient.name}}:  {{ingredient.amount}}</li>
+
+<div class="row">
+  <div class="col-xs-12">
+    <form [formGroup]="recipeForm" (submit)="onSubmit()">
+
+      <div class="row">
+        <div class="col-xs-12">
+          <button type="submit" class="btn btn-success" [disabled]="!recipeForm.valid">Save</button>
+          <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
+            <span class="navbar-right">{{recipeForm.get('id').value | uppercase}}</span>
+        </div>
+      </div>
+
+      <br/>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <img [src]="imagePath" alt="recipe picture"
+                 class="img-responsive"
+                 width="500" height="400">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text"
+                     id="name"
+                     formControlName="name"
+                     class="form-control"
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <label for="imagePath">Image Path</label>
+              <input type="text"
+                     id="imagePath"
+                     formControlName="imagePath"
+                     class="form-control"
+                     #imagePathInput
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea type="text"
+                        id="description"
+                        formControlName="description"
+                        class="form-control"
+                        rows="6"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+<!--    Ingredients-->
+        <label>Ingredients</label>
+        <div class="row">
+          <div class="col-xs-12" formArrayName="ingredients">
+            @for (item of ingredientsFormArray.controls; track getIngredientId(item)) {
+              <div class="row" [formGroupName]="$index" style="margin-top: 5px;">
+                <div class="col-xs-8">
+                  <input type="text"
+                         class="form-control"
+                         formControlName="name"
+                  >
+                </div>
+                <div class="col-xs-2">
+                  <input type="number"
+                         class="form-control"
+                         formControlName="amount"
+                  >
+                </div>
+                <div class="col-xs-2">
+                  <button type="button" class="btn btn-danger" (click)="onDeleteIngredient(getIngredientId(item))">X</button>
+                </div>
+              </div>
             }
-        </ul>
-    </div>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-xs-12">
+            <button type="button"
+                    class="btn btn-success"
+                    (click)="onAddIngredient()"
+            >Add ingredient</button>
+          </div>
+        </div>
+
+    </form>
+  </div>
 </div>
 

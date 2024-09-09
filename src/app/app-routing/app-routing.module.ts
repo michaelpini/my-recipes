@@ -9,8 +9,10 @@ import { RecipeEditComponent } from "../recipes/recipe-edit/recipe-edit.componen
 const routes: Routes = [
   {path: '', redirectTo: 'recipes', pathMatch: 'full'},
   {path: 'recipes', component: RecipesComponent, children: [
-    {path: ':id', component: RecipeDetailComponent},
-    {path: ':id/edit', component: RecipeEditComponent,},
+      {path: '', component: RecipeDetailComponent},
+      {path: 'new', component: RecipeEditComponent,},
+      {path: ':id', component: RecipeDetailComponent},
+      {path: ':id/edit', component: RecipeEditComponent,},
   ]},
   {path: 'shoppinglist', component: ShoppingListComponent},
   {path: 'crap', component: CrapComponent},

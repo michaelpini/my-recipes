@@ -9,10 +9,15 @@ export class ShoppingService {
         new Ingredient('Tomatoes', 10)
     ];
     changed = new Subject<Ingredient[]>();
+    startedEditing= new Subject<number>();
 
     constructor () { }
     getIngredients() {
         return this.ingredients.slice();
+    }
+
+    getIngredient(index: number): Ingredient {
+      return this.ingredients[index];
     }
 
     add(name: string, amount: number): void
@@ -24,9 +29,20 @@ export class ShoppingService {
         }
         else if (typeof p1 === 'object') {
             this.ingredients.push(p1);
-        } else { 
+        } else {
             this.ingredients.push(new Ingredient(p1, p2));
         }
         this.changed.next(this.getIngredients());
     }
+
+    edit(ingredient: Ingredient, index: number) {
+      this.ingredients[index] = ingredient;
+      this.changed.next(this.getIngredients());
+    }
+
+    delete(index: number) {
+      this.ingredients.splice(index, 1);
+      this.changed.next(this.getIngredients());
+    }
+
 }
