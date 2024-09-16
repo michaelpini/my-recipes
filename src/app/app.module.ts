@@ -20,6 +20,10 @@ import {AppRoutingModule} from './app-routing/app-routing.module';
 import {RecipeEditComponent} from './recipes/recipe-edit/recipe-edit.component';
 import {NgOptimizedImage} from "@angular/common";
 import {ShortenPipe} from "./shared/shorten.pipe";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import { AuthComponent } from './auth/auth.component';
+import {SpinnerComponent} from "./shared/spinner/spinner.component";
+import {AuthInterceptorService} from "./auth/auth.interceptor.service";
 
 @NgModule({
     declarations: [
@@ -40,16 +44,26 @@ import {ShortenPipe} from "./shared/shorten.pipe";
         ToggleClassDirective,
         RecipeEditComponent,
         ShortenPipe,
-        CrapChildComponent
+        CrapChildComponent,
+        AuthComponent,
+        SpinnerComponent,
     ],
     imports: [
         BrowserModule,
         FormsModule,
         ReactiveFormsModule,
+        HttpClientModule,
         AppRoutingModule,
-        NgOptimizedImage
+        NgOptimizedImage,
     ],
-    providers: [],
+    providers: [
+        HttpClientModule,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptorService,
+            multi: true,
+        }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

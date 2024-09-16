@@ -1,0 +1,9 @@
+.password-container {
+    display: flex;
+    align-items: center;
+    position:relative
+}
+.password-svg {
+    position: absolute;
+    right: 10px;
+}

@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="btn-group" dropdown>
-            <button type="button" class="btn btn-primary btn-toggle">
+            <button type="button" class="btn btn-primary btn-toggle" [disabled]="!recipe.id">
                 Manage Recipe <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
@@ -16,9 +16,8 @@
 <br>
 <div class="row">
     <div class="col-xs-12">
-        <img [src]="recipe.imagePath" alt="recipe image"
+        <img [src]="recipe.imagePath" alt="recipe image" (error)="setBrokenImage($event)"
              class="img-responsive"
-             [class]="{'img-gray': !recipe.id}"
              width="500" height="400">
     </div>
 

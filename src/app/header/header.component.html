@@ -10,25 +10,39 @@
         <div class="navbar-collapse" [class.collapse]="collapsed" (window:resize)="collapsed = true">
             <!-- navbar items -->
             <ul class="nav navbar-nav">
-                <li routerLinkActive="active">
-                    <a routerLink="/recipes">Recipes</a>
-                </li>
-                <li routerLinkActive="active">
-                    <a routerLink="/shoppinglist">Shopping List</a>
-                </li>
+
+                @if (authUser) {
+                    <li routerLinkActive="active">
+                        <a routerLink="/recipes">Recipes</a>
+                    </li>
+                    <li routerLinkActive="active">
+                        <a routerLink="/shoppinglist">Shopping List</a>
+                    </li>
+                }
                 <li routerLinkActive="active">
                     <a routerLink="/crap">Crap</a>
                 </li>
            </ul>
             <!-- dropdown menu - right -->
             <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown" toggleClass="open">
-                    <a class="dropdown-toggle pointer" role="button">Manage <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a class="pointer">Save Data</a></li>
-                        <li><a class="pointer">Fetch Data</a></li>
-                    </ul>
-                </li>
+                @if (authUser) {
+                    <li>
+                        <a style="cursor: pointer" (click)="signOut()">Logout</a>
+                    </li>
+                    <li class="dropdown" toggleClass="open">
+                        <a class="dropdown-toggle pointer" role="button">Manage <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="pointer" (click)="saveAll()">Save Data</a></li>
+                            <li><a class="pointer" (click)="reload()">Reload</a></li>
+                            <li><a class="pointer" (click)="addDummyData()">Add dummy data</a></li>
+                        </ul>
+                    </li>
+                }
+                @else {
+                    <li routerLinkActive="active">
+                        <a routerLink="/auth">Auth</a>
+                    </li>
+                }
             </ul>
         </div>
     </div>

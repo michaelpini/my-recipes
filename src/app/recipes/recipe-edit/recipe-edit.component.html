@@ -1,104 +1,106 @@
-
-
 <div class="row">
-  <div class="col-xs-12">
-    <form [formGroup]="recipeForm" (submit)="onSubmit()">
+    <div class="col-xs-12">
+        <form [formGroup]="recipeForm" (submit)="onSubmit()">
 
-      <div class="row">
-        <div class="col-xs-12">
-          <button type="submit" class="btn btn-success" [disabled]="!recipeForm.valid">Save</button>
-          <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
-            <span class="navbar-right">{{recipeForm.get('id').value | uppercase}}</span>
-        </div>
-      </div>
-
-      <br/>
-
-        <div class="row">
-          <div class="col-xs-12">
-            <img [src]="imagePath" alt="recipe picture"
-                 class="img-responsive"
-                 width="500" height="400">
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text"
-                     id="name"
-                     formControlName="name"
-                     class="form-control"
-              >
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="form-group">
-              <label for="imagePath">Image Path</label>
-              <input type="text"
-                     id="imagePath"
-                     formControlName="imagePath"
-                     class="form-control"
-                     #imagePathInput
-              >
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="form-group">
-              <label for="description">Description</label>
-              <textarea type="text"
-                        id="description"
-                        formControlName="description"
-                        class="form-control"
-                        rows="6"
-              ></textarea>
-            </div>
-          </div>
-        </div>
-
-<!--    Ingredients-->
-        <label>Ingredients</label>
-        <div class="row">
-          <div class="col-xs-12" formArrayName="ingredients">
-            @for (item of ingredientsFormArray.controls; track getIngredientId(item)) {
-              <div class="row" [formGroupName]="$index" style="margin-top: 5px;">
-                <div class="col-xs-8">
-                  <input type="text"
-                         class="form-control"
-                         formControlName="name"
-                  >
+            <div class="row">
+                <div class="col-xs-12">
+                    <button type="submit" class="btn btn-success" [disabled]="!recipeForm.valid">Save</button>
+                    <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
+                    <button type="button" class="btn" (click)="onRevert()">Revert</button>
+                    <span class="navbar-right">{{ recipeForm.get('id').value | uppercase }}</span>
                 </div>
-                <div class="col-xs-2">
-                  <input type="number"
-                         class="form-control"
-                         formControlName="amount"
-                  >
-                </div>
-                <div class="col-xs-2">
-                  <button type="button" class="btn btn-danger" (click)="onDeleteIngredient(getIngredientId(item))">X</button>
-                </div>
-              </div>
-            }
-          </div>
-        </div>
-        <hr>
-        <div class="row">
-          <div class="col-xs-12">
-            <button type="button"
-                    class="btn btn-success"
-                    (click)="onAddIngredient()"
-            >Add ingredient</button>
-          </div>
-        </div>
+            </div>
 
-    </form>
-  </div>
+            <br/>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <img [src]="imagePath" alt="recipe picture" (error)="setBrokenImage($event)"
+                         class="img-responsive"
+                         width="500" height="400">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text"
+                               id="name"
+                               formControlName="name"
+                               class="form-control"
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="imagePath">Image Path</label>
+                        <input type="text"
+                               id="imagePath"
+                               formControlName="imagePath"
+                               class="form-control"
+                               #imagePathInput
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea type="text"
+                                  id="description"
+                                  formControlName="description"
+                                  class="form-control"
+                                  rows="6"
+                        ></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!--    Ingredients-->
+            <label>Ingredients</label>
+            <div class="row">
+                <div class="col-xs-12" formArrayName="ingredients">
+                    @for (item of ingredientsFormArray.controls; track getIngredientId(item)) {
+                        <div class="row" [formGroupName]="$index" style="margin-top: 5px;">
+                            <div class="col-xs-8">
+                                <input type="text"
+                                       class="form-control"
+                                       formControlName="name"
+                                >
+                            </div>
+                            <div class="col-xs-2">
+                                <input type="number"
+                                       class="form-control"
+                                       formControlName="amount"
+                                >
+                            </div>
+                            <div class="col-xs-2">
+                                <button type="button" class="btn btn-danger"
+                                        (click)="onDeleteIngredient(getIngredientId(item))">X
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-xs-12">
+                    <button type="button"
+                            class="btn btn-success"
+                            (click)="onAddIngredient()"
+                    >Add ingredient
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
 </div>
 

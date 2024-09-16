@@ -14,10 +14,10 @@
  * waitForIt();
  * setTimeout(() => deferred.resolve(), 1000);
  */
-class Deferred {
-    promise;
-    resolve;
-    reject;
+class Deferred<T> {
+    promise: Promise<T>;
+    resolve: (value: T) => void;
+    reject: (error: string | Error) => void;
 
     constructor() {
         this.promise = new Promise((resolve, reject) => {
@@ -35,18 +35,18 @@ class Deferred {
  * const id = getRandomId();  // "895964fc-31d6-2daf-7603-4f651a90200d"
  * @returns {string}
  */
-function getRandomId() {
+function getRandomId(): string {
     try {
         return crypto.randomUUID();
     }
     catch (error) {
-        let [a, b, c, d, e] = crypto.getRandomValues(new BigUint64Array(5));
-        a = a.toString(16).slice(-8);
-        b = b.toString(16).slice(-4);
-        c = c.toString(16).slice(-4);
-        d = d.toString(16).slice(-4);
-        e = e.toString(16).slice(-12);
-        return `${a}-${b}-${c}-${d}-${e}`
+        let [n1, n2, n3, n4, n5] = crypto.getRandomValues(new BigUint64Array(5));
+        const s1= n1.toString(16).slice(-8);
+        const s2 = n2.toString(16).slice(-4);
+        const s3 = n3.toString(16).slice(-4);
+        const s4 = n4.toString(16).slice(-4);
+        const s5 = n5.toString(16).slice(-12);
+        return `${s1}-${s2}-${s3}-${s4}-${s5}`
     }
 }
 
@@ -56,7 +56,7 @@ function getRandomId() {
  * @param prop {string} property / key name to sort by
  * @param descending {boolean} indicates whether to sort in descending order - default ascending
  * @param clone {boolean} indicates whether to return a copy of the array - default returns original
- * @returns {object[]|*}
+ * @returns {object[]}
  * @example Sorts arr by name in ascending order (***modifies the original array*** and returns it)
  * const arr = [
  *     {name: 'John Doe', age: 23},
@@ -66,9 +66,9 @@ function getRandomId() {
  * @example Returns a ***copy of the original array***, sorted by age in descending order
  * const sortedCopy = sortObjectArray(arr, 'age', true, true);
  */
-function sortObjectArray(array, prop, descending = false, clone = false) {
+function sortObjectArray(array: object[], prop: string|number|symbol, descending = false, clone = false): object[] {
     if (!Array.isArray(array) || !array.length || !Object.hasOwn(array[0], prop)) return array;
-    const arr = clone ? [...array] : array;
+    const arr: object[] = clone ? [...array] : array;
     arr.sort((a, b) => {
         if (a[prop] > b[prop]) return descending ? -1 : 1;
         if (a[prop] < b[prop]) return descending ? 1 : -1;
@@ -86,7 +86,7 @@ function sortObjectArray(array, prop, descending = false, clone = false) {
  * saveToFile(data, 'membersList');
  * // %userprofile%\downloads\membersList.json
  */
-function saveToFile (obj, filename) {
+function saveToFile (obj: object, filename: string) {
     const blob = new Blob([JSON.stringify(obj, null, 2)], {
         type: 'application/json',
     });
@@ -98,4 +98,18 @@ function saveToFile (obj, filename) {
     URL.revokeObjectURL(url);
 }
 
-export { Deferred, getRandomId, sortObjectArray, saveToFile };
+/**
+ * Sets the src property of an \<img> tag to a placeholder image if the src is broken. <br>
+ * The brokenImg is hardcoded, update as needed
+ * @param {ErrorEvent} e
+ * @example
+ * <img src="???" onerror="setBrokenImage(event)" />   (vanilla.js)
+ * <img src="???" (error)="setBrokenImage($event)" />  (Angular)
+ */
+function setBrokenImage(e: ErrorEvent) {
+    const brokenImg =  '/assets/broken_img.jpg';
+    const target = e.target as HTMLImageElement;
+    if (!target.src.includes(brokenImg)) target.src = brokenImg;
+}
+
+export { Deferred, getRandomId, sortObjectArray, saveToFile, setBrokenImage };

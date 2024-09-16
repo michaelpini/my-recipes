@@ -6,6 +6,8 @@ import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Location} from "@angular/common";
 import {getRandomId} from "../../shared/util.js"
 import {Subscription} from "rxjs";
+import {StorageService} from "../../shared/storage.service";
+import {setBrokenImage} from "../../shared/util.js";
 
 @Component({
     selector: 'recipe-edit',
@@ -15,18 +17,19 @@ import {Subscription} from "rxjs";
 export class RecipeEditComponent implements OnInit, OnDestroy {
     recipeForm: FormGroup;
     editMode = false;
-    no_image = '../../../assets/not_found.jpg'
     routeSubscription: Subscription;
+    protected setBrokenImage = setBrokenImage;
 
     constructor(
         private route: ActivatedRoute,
         private recipeService: RecipeService,
+        private storageService: StorageService,
         private location: Location
     ) {
     }
 
     ngOnInit(): void {
-        this.route.params.subscribe((params: Params) => {
+        this.routeSubscription = this.route.params.subscribe((params: Params) => {
             this.editMode = params.id != null;
             this.initForm(params.id);
         })
@@ -39,9 +42,15 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     onSubmit() {
         const recipe: Recipe = this.recipeForm.value;
         if (this.editMode) {
-            this.recipeService.updateRecipe(recipe);
+            this.storageService.updateRecipe(recipe)
+                .subscribe(res => {
+                    this.recipeService.updateRecipe(recipe);
+                })
         } else {
-            this.recipeService.addRecipe(recipe);
+            this.storageService.addRecipe(recipe)
+                .subscribe(res => {
+                    this.recipeService.addRecipe(res);
+                })
         }
         this.onCancel();
     }
@@ -93,5 +102,13 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
     onDeleteIngredient(index: number) {
         this.ingredientsFormArray.removeAt(index, {emitEvent: false});
+    }
+
+    onRevert() {
+        this.storageService.getRecipe(this.recipeForm.get('id').value)
+            .subscribe(recipe => {
+                this.recipeService.updateRecipe(recipe);
+                this.initForm(recipe.id);
+            })
     }
 }

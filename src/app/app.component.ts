@@ -1,14 +1,18 @@
-import { Component } from '@angular/core';
-import { LoggingService } from './shared/logging.service';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from "./auth/auth.service";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
-  providers: []  
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css',
+    providers: []
 })
-export class AppComponent {
-  title = 'my-recepies';
+export class AppComponent implements OnInit {
 
-  constructor(private loggingService: LoggingService) { }
+    constructor(private authService: AuthService) {
+    }
+
+    ngOnInit(): void {
+        this.authService.autoSignIn();
+    }
 }

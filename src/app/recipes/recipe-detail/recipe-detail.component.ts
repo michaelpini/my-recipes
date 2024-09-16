@@ -3,6 +3,8 @@ import {Recipe} from '../recipe.model';
 import {RecipeService} from '../recipe.service';
 import {ShoppingService} from '../../shopping/shopping.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
+import {setBrokenImage} from '../../shared/util'
+import {StorageService} from "../../shared/storage.service";
 
 @Component({
     selector: 'recipe-detail',
@@ -14,14 +16,16 @@ export class RecipeDetailComponent implements OnInit {
         id: '',
         name: 'Select recipe...',
         description: 'Select a recipe from the list first',
-        imagePath: '../../../assets/not_found.jpg',
+        imagePath: '',
         ingredients: []
     }
     recipe: Recipe = this.no_recipe;
+    protected setBrokenImage = setBrokenImage;
 
 
     constructor(
         private recipeService: RecipeService,
+        private storageService: StorageService,
         private shoppingService: ShoppingService,
         private router: Router,
         private route: ActivatedRoute,
@@ -40,10 +44,16 @@ export class RecipeDetailComponent implements OnInit {
 
     delete() {
         if (confirm(`Delete recipe ${this.recipe.name} ?`)) {
-            this.recipeService.delete(this.recipe.id);
-            this.router.navigate(['../'], {relativeTo: this.route});
+            this.storageService.deleteRecipe(this.recipe.id)
+                .subscribe({
+                    next: res => {
+                        this.recipeService.delete(this.recipe.id);
+                        const firstId = this.recipeService.getFirstId();
+                        this.router.navigate(['../' + firstId], {relativeTo: this.route});
+                    },
+                    error: err => {alert('Error deleting recipe');}
+                })
         }
     }
-
 
 }

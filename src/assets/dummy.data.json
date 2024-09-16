@@ -1,0 +1,28 @@
+[
+    {
+        "name": "Spaghetti Bolognese",
+        "description": "Spaghetti with a tomato meat sauce.Easy to prepare.",
+        "imagePath": "https://www.giallozafferano.com/images/228-22832/spaghetti-with-tomato-sauce_650x433_wm.jpg",
+        "ingredients": [
+            {
+                "name": "Spaghetti",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "name": "Rigatti Pesto",
+        "description": "Pasta dish with pesto sauce.",
+        "imagePath": "https://www.bettybossi.ch/static/rezepte/x/bb_gus7191227_0180b_x.jpg",
+        "ingredients": [
+            {
+                "name": "Spaghetti",
+                "amount": 1
+            },
+            {
+                "name": "Pesto sauce",
+                "amount": 1
+            }
+        ]
+    }
+]
